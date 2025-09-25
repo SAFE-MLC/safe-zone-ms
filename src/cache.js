@@ -7,7 +7,7 @@ export async function getTicketFromCache(ticketId) {
   const v = await redis.get(`ticket:${ticketId}`);
   return v ? JSON.parse(v) : null;
 }
-export async function setTicketInCache(ticketId, doc, ttl = 120) {
+export async function setTicketInCache(ticketId, doc, ttl = 3600) {
   await redis.setex(`ticket:${ticketId}`, ttl, JSON.stringify(doc));
 }
 
