@@ -80,6 +80,18 @@ router.post('/zones/checkpoint/scan', async (req, res) => {
       return res.json({ decision: 'DENY', reason: 'INVALID' });
     }
 
+    if (t.status !== 'ACTIVE') {
+      log({
+        event: 'zone_decision',
+        decision: 'DENY',
+        reason: t.status,
+        zoneCheckpointId,
+        ticketId,
+        elapsed_ms: Date.now() - started,
+      });
+      return res.json({ decision: 'DENY', reason: t.status });
+    }
+
     if (!Array.isArray(t.entitlements) || !t.entitlements.includes(cp.zoneId)) {
       log({
         event: 'zone_decision',
