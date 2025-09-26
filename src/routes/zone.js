@@ -89,7 +89,7 @@ router.post('/zones/checkpoint/scan', async (req, res) => {
         ticketId,
         elapsed_ms: Date.now() - started,
       });
-      return res.json({ decision: 'DENY', reason: t.status });
+      return res.json({ decision: 'DENY', reason: 'NO_GATE_ENTRY' });
     }
 
     if (!Array.isArray(t.entitlements) || !t.entitlements.includes(cp.zoneId)) {
